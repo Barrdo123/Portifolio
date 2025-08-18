@@ -1,7 +1,6 @@
-// Portfolio JavaScript - Funcionalidades do site
+
 document.addEventListener('DOMContentLoaded', function() {
     
-    // ===== NAVEGAÇÃO SUAVE =====
     const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
     
     navLinks.forEach(link => {
@@ -17,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     block: 'start'
                 });
                 
-                // Fechar menu mobile após clicar
                 const navbarCollapse = document.querySelector('.navbar-collapse');
                 if (navbarCollapse && navbarCollapse.classList.contains('show')) {
                     navbarCollapse.classList.remove('show');
@@ -25,8 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
-    // ===== ANIMAÇÕES AO ROLAR =====
+
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -39,8 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, observerOptions);
-    
-    // Observar elementos para animação
+
     const animateElements = document.querySelectorAll('.card, #sobre .row, #contato form');
     animateElements.forEach(el => {
         el.style.opacity = '0';
@@ -49,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
     
-    // Adicionar classe CSS para animações
+
     const style = document.createElement('style');
     style.textContent = `
         .animate-in {
@@ -58,14 +54,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
-    
-    // ===== VALIDAÇÃO DO FORMULÁRIO =====
+
     const form = document.querySelector('form');
     const nomeInput = document.getElementById('nome');
     const emailInput = document.getElementById('email');
     const mensagemInput = document.getElementById('mensagem');
     
-    // Função de validação
+
     function validarCampo(campo, mensagemErro) {
         const valor = campo.value.trim();
         const erroElement = campo.parentElement.querySelector('.erro');
@@ -79,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
         
-        // Validação específica para email
+
         if (campo.type === 'email') {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(valor)) {
@@ -100,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
         campo.parentElement.appendChild(erroDiv);
     }
     
-    // Validação em tempo real
+
     if (nomeInput && emailInput && mensagemInput) {
         [nomeInput, emailInput, mensagemInput].forEach(campo => {
             campo.addEventListener('blur', function() {
@@ -119,10 +114,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Configuração do EmailJS
-    emailjs.init("ko_SQVYLiAFJcGcND"); // Substitua pela sua chave pública do EmailJS
+
+    emailjs.init("ko_SQVYLiAFJcGcND"); 
     
-    // Submissão do formulário com EmailJS
+
     const contactForm = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
     const btnText = document.getElementById('btnText');
@@ -132,8 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Validar campos
+
             const nomeInput = document.getElementById('nome');
             const emailInput = document.getElementById('email');
             const mensagemInput = document.getElementById('mensagem');
@@ -143,12 +137,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const mensagemValida = mensagemInput ? validarCampo(mensagemInput, 'Mensagem é obrigatória') : true;
             
             if (nomeValido && emailValido && mensagemValida) {
-                // Mostrar spinner
+
                 btnText.style.display = 'none';
                 btnSpinner.style.display = 'inline-block';
                 submitBtn.disabled = true;
                 
-                // Preparar dados do formulário
+
                 const templateParams = {
                     nome: nomeInput.value,
                     email: emailInput.value,
@@ -156,15 +150,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     to_email: 'eduardo.barrdo@gmail.com'
                 };
                 
-                // Enviar email via EmailJS
+
                 emailjs.send('service_9n23olt', 'template_noj6vjg', templateParams)
                     .then(function(response) {
                         console.log('SUCCESS!', response.status, response.text);
-                        
-                        // Limpar formulário
+
                         contactForm.reset();
                         
-                        // Mostrar mensagem de sucesso
+
                         formMessage.innerHTML = `
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <strong>Sucesso!</strong> Sua mensagem foi enviada para eduardo.barrdo@gmail.com. Entrarei em contato em breve.
@@ -174,12 +167,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         `;
                         
-                        // Esconder spinner
+
                         btnText.style.display = 'inline';
                         btnSpinner.style.display = 'none';
                         submitBtn.disabled = false;
                         
-                        // Remover mensagem após 5 segundos
+
                         setTimeout(() => {
                             formMessage.innerHTML = '';
                         }, 5000);
@@ -187,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }, function(error) {
                         console.log('FAILED...', error);
                         
-                        // Mostrar mensagem de erro
+
                         formMessage.innerHTML = `
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <strong>Erro!</strong> Não foi possível enviar a mensagem. Por favor, tente novamente.
@@ -197,12 +190,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         `;
                         
-                        // Esconder spinner
+
                         btnText.style.display = 'inline';
                         btnSpinner.style.display = 'none';
                         submitBtn.disabled = false;
                         
-                        // Remover mensagem após 5 segundos
+
                         setTimeout(() => {
                             formMessage.innerHTML = '';
                         }, 5000);
@@ -210,8 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
-    // ===== EFEITO PARALLAX NO HEADER =====
+
     window.addEventListener('scroll', function() {
         const scrolled = window.pageYOffset;
         const header = document.querySelector('header');
@@ -222,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // ===== RESPONSIVIDADE DO MENU =====
+   
     const navbarToggler = document.querySelector('.navbar-toggler');
     const navbarCollapse = document.querySelector('.navbar-collapse');
     
@@ -232,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ===== INTERATIVIDADE DOS CARDS =====
+    
     const cards = document.querySelectorAll('.card');
     cards.forEach(card => {
         card.addEventListener('mouseenter', function() {
@@ -247,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // ===== SCROLL SPY =====
+  
     window.addEventListener('scroll', function() {
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
@@ -271,6 +263,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // ===== INICIALIZAÇÃO =====
-    console.log('Portfolio JavaScript carregado com sucesso!');
-});
