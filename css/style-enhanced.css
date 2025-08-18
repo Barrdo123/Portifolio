@@ -170,12 +170,12 @@ section:nth-child(even) {
 
 /* ===== Imagem de Perfil ===== */
 #sobre img {
-    width: 300px; /* ajuste o tamanho que quiser */
-    height: 300px; /* mantém formato quadrado antes do círculo */
-    object-fit: cover; /* corta para não distorcer */
-    border-radius: 10%; /* deixa a imagem circular */
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10%;
     display: block;
-    margin: 0 auto; /* centraliza horizontalmente */
+    margin: 0 auto;
     box-shadow: var(--shadow);
     transition: var(--transition);
 }
@@ -260,3 +260,4 @@ a {
 a:hover {
     color: var(--primary-color);
 }
+
